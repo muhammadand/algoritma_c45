@@ -18,9 +18,16 @@ return new class extends Migration
             $table->string('name');
             $table->string('username')->unique();
             $table->string('password');
-            $table->enum('role', ['admin', 'manajer','kasir'])->default('kasir'); // Role untuk multi-user
+            $table->enum('role', ['admin', 'marketing','supervisor'])->default('marketing');
+            
+            // Kolom tambahan yang nullable
+            $table->text('alamat')->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->string('foto')->nullable(); // bisa simpan path gambar
+            
             $table->timestamps();
         });
+        
     }
 
     /**

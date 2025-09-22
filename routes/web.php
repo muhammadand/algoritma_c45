@@ -5,7 +5,45 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PenggunaController;
-use App\Http\Controllers\PenjualanController;
+
+use App\Http\Controllers\DataTanamanController;
+
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\ObatController;
+
+
+Route::resource('obat', ObatController::class);
+Route::delete('obat/destroyAll/obat', [App\Http\Controllers\ObatController::class, 'destroyAll'])->name('obat.destroyAll');
+Route::post('obat/import', [ObatController::class, 'import'])->name('obat.import');
+Route::post('/obat/klasifikasi', [ObatController::class, 'klasifikasi'])->name('obat.klasifikasi');
+Route::get('/rules/obat', [ObatController::class, 'rules'])->name('obat.rules');
+Route::get('/obat/akurasi/obat', [ObatController::class, 'ujiAkurasi'])->name('obat.akurasi');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,6 +54,10 @@ use App\Http\Controllers\PenjualanController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+
+
 
 
 
@@ -30,39 +72,19 @@ Route::put('users/{id}', [UserController::class, 'update'])->name('user.update')
 
 // Hapus user
 Route::delete('users/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+Route::get('/users/create', [UserController::class, 'create'])->name('user.create'); // Form tambah user
+Route::post('/users', [UserController::class, 'store'])->name('user.store');
 
 
-use App\Http\Controllers\KeranjangController;
-Route::post('/penjualan/simpan', [PenjualanController::class, 'simpanDariKeranjang'])->name('penjualan.simpan');
-Route::get('/penjualan', [PenjualanController::class, 'index'])->name('penjualan.index');
-Route::get('/penjualan/struk', [PenjualanController::class, 'struk'])->name('penjualan.struk');
-Route::get('/penjualan/laporan', [PenjualanController::class, 'laporan'])->name('penjualan.laporan');
-Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
-Route::post('/keranjang/tambah', [KeranjangController::class, 'tambahKeKeranjang'])->name('keranjang.tambah');
-Route::post('/keranjang/ubah-jumlah/{idKeranjang}', [KeranjangController::class, 'ubahJumlah'])->name('keranjang.ubah-jumlah');
-Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus'])->name('keranjang.hapus');
-use App\Http\Controllers\KategoriController;
-
-Route::get('kategori', [KategoriController::class, 'index'])->name('kategori.index');
-
-use App\Http\Controllers\ProdukController;
-
-Route::resource('produk', ProdukController::class);
-
-Route::post('kategori/store', [KategoriController::class, 'storeOrUpdate'])->name('kategori.store');
-Route::post('kategori/update/{id}', [KategoriController::class, 'storeOrUpdate'])->name('kategori.update');
-Route::get('kategori/edit/{id}', [KategoriController::class, 'edit'])->name('kategori.edit');
-Route::delete('kategori/delete/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 
 Route::get('/', [UserController::class, 'login'])->name('login');
-
 Route::get('register', [UserController::class, 'register'])->name('register');
 Route::post('register', [UserController::class, 'register_action'])->name('register.action');
-Route::get('login', [UserController::class, 'login'])->name('login');
 Route::post('login', [UserController::class, 'login_action'])->name('login.action');
 Route::get('password', [UserController::class, 'password'])->name('password');
 Route::post('password', [UserController::class, 'password_action'])->name('password.action');
 Route::get('logout', [UserController::class, 'logout'])->name('logout');
+
 
 
 
@@ -75,7 +97,8 @@ Route::get('/landing', [PenggunaController::class, 'index'])->name('pengguna.ind
 
 use App\Http\Controllers\ProfilController;
 
-Route::get('/profil/{id}', [ProfilController::class, 'show'])->name('profil.show');
+Route::get('profile', [ProfilController::class, 'show'])->name('profile.show');
+
 // Route untuk menampilkan form create profil
 Route::get('/profil/create', [ProfilController::class, 'create'])->name('profil.create');
 

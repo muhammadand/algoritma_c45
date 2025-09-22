@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profil;
+
+
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -22,47 +24,46 @@ class ProfilController extends Controller
         $validated = $request->validate([
             'alamat' => 'required|string',
             'tanggal_lahir' => 'required|date',
-            'foto' => 'nullable|image',
+            'foto' => 'nullable|image|max:2048', // batas ukuran opsional
         ]);
-
-        // Menyimpan data profil
+    
+        // Upload foto jika ada
         $fotoPath = null;
         if ($request->hasFile('foto')) {
-            // Jika ada foto, simpan file di storage
             $fotoPath = $request->file('foto')->store('images', 'public');
         }
-
-        $profil = Profil::create([
-            'user_id' => Auth::id(),
+    
+        // Update data user yang sedang login
+        $user = Auth::user();
+        $user->update([
             'alamat' => $validated['alamat'],
             'tanggal_lahir' => $validated['tanggal_lahir'],
             'foto' => $fotoPath,
         ]);
-
-        // Menampilkan profil yang baru disimpan
-        return view('profil.show', compact('profil'))->with('success', 'Profil berhasil disimpan!');
+    
+        return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
     }
 
-    // Menampilkan profil berdasarkan user_id
-    public function show($id)
+    public function show()
     {
-        // Cari profil berdasarkan user_id
-        $profil = Profil::where('user_id', $id)->first();
-
+        // Mengambil profil pengguna yang sedang login
+        $profil = User::where('user_id', auth()->id())->first();
+    
         // Jika profil tidak ditemukan, tampilkan halaman create
         if (!$profil) {
-            return view('profil.create')->with('error', 'Profil tidak ditemukan!'); 
+            return view('profil.create')->with('error', 'Profil tidak ditemukan!');
         }
-
+    
         // Tampilkan profil pada halaman show
         return view('profil.show', compact('profil'));
     }
+    
 
     // Menampilkan form untuk mengedit profil
     public function edit($id)
     {
         // Cari profil berdasarkan user_id
-        $profil = Profil::where('user_id', $id)->first();
+        $profil = User::where('user_id', $id)->first();
 
         // Jika profil tidak ditemukan, tampilkan halaman create
         if (!$profil) {
@@ -84,7 +85,7 @@ class ProfilController extends Controller
         ]);
 
         // Cari profil berdasarkan user_id
-        $profil = Profil::where('user_id', $id)->first();
+        $profil = User::where('user_id', $id)->first();
 
         // Jika profil tidak ditemukan, tampilkan halaman create
         if (!$profil) {

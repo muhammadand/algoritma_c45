@@ -17,4 +17,5 @@ class PenggunaController extends Controller
         // Fungsi untuk menampilkan profil pengguna
         return view('user.profile');
     }
+    
 }

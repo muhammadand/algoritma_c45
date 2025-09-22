@@ -1,73 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
     <meta charset="UTF-8">
+    <title>Login - Website Early</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login - StraightRay</title>
-    <link rel="stylesheet" href="../assets/css/styles.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
+<body class="bg-gradient-to-br from-blue-200 via-blue-100 to-white min-h-screen flex items-center justify-center font-sans">
 
-<body>
-    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-        data-sidebar-position="fixed" data-header-position="fixed">
-        <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
-            <div class="d-flex align-items-center justify-content-center w-100">
-                <div class="row justify-content-center w-100">
-                    <div class="col-md-8 col-lg-6 col-xxl-3">
-                        <div class="card mb-0">
-                            <div class="card-body">
-                                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                    <span style="font-size: 2rem; font-weight: bold; color: #007bff; text-transform: uppercase; text-decoration: none; letter-spacing: 2px; font-family: 'Arial', sans-serif;">
-                                        StraightRay.co
-                                    </span>
-                                </a>
-
-                                @if(session('success'))
-                                <p class="alert alert-success">{{ session('success') }}</p>
-                                @endif
-                                @if($errors->any())
-                                @foreach($errors->all() as $err)
-                                <p class="alert alert-danger">{{ $err }}</p>
-                                @endforeach
-                                @endif
-
-                                <p class="text-center">Your Social Campaigns</p>
-                                <form action="{{ route('login.action') }}" method="POST">
-                                    @csrf
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="username" value="{{ old('username') }}" id="username" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="password" name="password" id="password" required>
-                                    </div>
-                                    {{-- <div class="mb-3 form-check">
-                                        <input class="form-check-input" type="checkbox" name="is_admin" value="1" id="is_admin">
-                                        <label class="form-check-label" for="is_admin">
-                                            Login as Admin
-                                        </label>
-                                    </div> --}}
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary w-100 py-8 fs-4 mb-4">Login</button>
-                                    </div>
-                                </form>
-                                <div class="d-flex align-items-center justify-content-center">
-                                    <p class="fs-4 mb-0 fw-bold">New to StraightRay?</p>
-                                    <a class="text-primary fw-bold ms-2" href="{{route('register')}}">Create an account</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="bg-white shadow-lg rounded-2xl w-full max-w-md p-8 relative">
+        {{-- Logo Desa --}}
+        <div class="flex justify-center mb-4">
+            <img src="{{ asset('images/logo.jpg') }}" alt="Logo Desa" class="h-24 w-24 rounded-full shadow-md border-4 border-blue-300">
         </div>
+
+        <h2 class="text-2xl font-bold text-center text-blue-800 mb-6">Selamat Datang di Website Early</h2>
+
+        {{-- Notifikasi --}}
+        @if(session('success'))
+            <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-3">{{ session('success') }}</div>
+        @endif
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                <div class="bg-red-100 text-red-800 px-4 py-2 rounded mb-2">{{ $error }}</div>
+            @endforeach
+        @endif
+
+        <form method="POST" action="{{ route('login.action') }}" class="space-y-4">
+            @csrf
+
+            <div class="flex items-center border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-400">
+                <i class="fas fa-user text-gray-500 mr-2"></i>
+                <input type="text" name="username" value="{{ old('username') }}" placeholder="Username"
+                       class="w-full border-none outline-none text-gray-700" required>
+            </div>
+
+            <div class="flex items-center border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-400">
+                <i class="fas fa-lock text-gray-500 mr-2"></i>
+                <input type="password" name="password" placeholder="Password"
+                       class="w-full border-none outline-none text-gray-700" required>
+            </div>
+
+            <div class="flex justify-between items-center text-sm">
+                <a href="{{ route('password') }}" class="text-blue-600 hover:underline">Lupa password?</a>
+            </div>
+
+            <button type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded shadow">
+                Masuk
+            </button>
+
+            <a href="{{ route('register') }}"
+               class="w-full block text-center border border-blue-500 text-blue-600 font-semibold py-2 rounded hover:bg-blue-50 mt-2">
+                Daftar Akun
+            </a>
+        </form>
     </div>
 
-    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

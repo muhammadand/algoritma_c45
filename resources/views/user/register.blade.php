@@ -1,81 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Register - StraightRay</title>
-    <link rel="shortcut icon" type="image/png" href="../assets/images/logos/seodashlogo.png" />
-    <link rel="stylesheet" href="../assets/css/styles.min.css" />
+    <meta charset="UTF-8">
+    <title>Registrasi - Website Desa</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 </head>
+<body class="bg-gradient-to-br from-blue-100 via-white to-blue-50 min-h-screen flex items-center justify-center font-sans">
 
-<body>
-    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-        data-sidebar-position="fixed" data-header-position="fixed">
-        <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
-            <div class="d-flex align-items-center justify-content-center w-100">
-                <div class="row justify-content-center w-100">
-                    <div class="col-md-8 col-lg-6 col-xxl-3">
-                        <div class="card mb-0">
-                            <div class="card-body">
-                                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                    <span style="font-size: 2rem; font-weight: bold; color: #007bff; text-transform: uppercase; text-decoration: none; letter-spacing: 2px; font-family: 'Arial', sans-serif;">
-                                        StraightRay.co
-                                    </span>
-                                </a>
-                                <p class="text-center">Create Your Account</p>
+    <div class="bg-white shadow-xl rounded-xl flex flex-col md:flex-row overflow-hidden max-w-4xl w-full">
+        <!-- Logo / Info Section -->
+        <div class="bg-blue-600 text-white flex flex-col justify-center items-center p-8 md:w-1/2">
+            <img src="{{ asset('images/logo.jpg') }}" alt="Logo Desa" class="w-28 h-28 rounded-full mb-4 border-4 border-white shadow-lg">
+            <h2 class="text-2xl font-bold mb-2">Selamat Datang!</h2>
+            <p class="text-center text-blue-100">Silakan buat akun untuk dapat mengakses layanan dan informasi dari website desa.</p>
+        </div>
 
-                                @if($errors->any())
-                                @foreach($errors->all() as $err)
-                                <p class="alert alert-danger">{{ $err }}</p>
-                                @endforeach
-                                @endif
+        <!-- Form Section -->
+        <div class="p-8 md:w-1/2">
+            <h1 class="text-2xl font-semibold text-blue-800 text-center mb-6">Buat Akun Baru</h1>
 
-                                <form action="{{ route('register.action') }}" method="POST">
-                                    @csrf
-                                    <div class="mb-3">
-                                        <label class="form-label">Name <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="name" value="{{ old('name') }}" required />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Username <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="text" name="username" value="{{ old('username') }}" required />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Password <span class="text-danger">*</span></label>
-                                        <input class="form-control" type="password" name="password" required />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Password Confirmation<span class="text-danger">*</span></label>
-                                        <input class="form-control" type="password" name="password_confirm" required />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Role <span class="text-danger">*</span></label>
-                                        <select class="form-control" name="role" required>
-                                            <option value="manajer" {{ old('role') == 'manajer' ? 'selected' : '' }}>Manajer</option>
-                                            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                                            <option value="kasir" {{ old('role') == 'kasir' ? 'selected' : '' }}>Kasir</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <button class="btn btn-primary w-100 py-8 fs-4 mb-4">Register</button>
-                                    </div>
-                                    <div class="d-flex align-items-center justify-content-center">
-                                        <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
-                                        <a class="text-primary fw-bold ms-2" href="{{ route('login') }}">Sign In</a>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+            @if($errors->any())
+                @foreach($errors->all() as $err)
+                    <div class="bg-red-100 text-red-800 px-4 py-2 rounded mb-2 text-sm">{{ $err }}</div>
+                @endforeach
+            @endif
+
+            <form action="{{ route('register.action') }}" method="POST" class="space-y-4">
+                @csrf
+
+                <!-- Name -->
+                <div class="flex items-center border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-300">
+                    <i class="fas fa-user text-gray-500 mr-2"></i>
+                    <input type="text" name="name" value="{{ old('name') }}" placeholder="Nama lengkap"
+                           class="w-full border-none outline-none text-gray-700" required>
                 </div>
-            </div>
+
+                <!-- Username -->
+                <div class="flex items-center border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-300">
+                    <i class="fas fa-envelope text-gray-500 mr-2"></i>
+                    <input type="text" name="username" value="{{ old('username') }}" placeholder="Username"
+                           class="w-full border-none outline-none text-gray-700" required>
+                </div>
+
+                <!-- Password -->
+                <div class="flex items-center border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-300">
+                    <i class="fas fa-lock text-gray-500 mr-2"></i>
+                    <input type="password" name="password" placeholder="Kata sandi"
+                           class="w-full border-none outline-none text-gray-700" required>
+                </div>
+
+                <!-- Konfirmasi Password -->
+                <div class="flex items-center border rounded px-3 py-2 focus-within:ring-2 focus-within:ring-blue-300">
+                    <i class="fas fa-lock text-gray-500 mr-2"></i>
+                    <input type="password" name="password_confirm" placeholder="Konfirmasi kata sandi"
+                           class="w-full border-none outline-none text-gray-700" required>
+                </div>
+
+                <!-- Role -->
+                <input type="hidden" name="role" value="admin">
+
+
+                <!-- Buttons -->
+                <button type="submit"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded shadow">
+                    Daftar Akun
+                </button>
+
+                <div class="text-center mt-2">
+                    <a href="{{ route('login') }}" class="text-sm text-blue-600 hover:underline">Sudah punya akun? Masuk</a>
+                </div>
+            </form>
         </div>
     </div>
-    
-    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
-</body>
 
+</body>
 </html>

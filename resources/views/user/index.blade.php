@@ -1,8 +1,13 @@
 @extends('app')
 
 @section('content')
-<div class="container-fluid">
-    <h1>Manage Users</h1>
+<div class="page-inner">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Manage Users</h1>
+        <a href="{{ route('user.create') }}" class="btn btn-label-primary btn-round btn-sm">
+            <i class="fas fa-plus me-2"></i> Tambah User
+        </a>
+    </div>
 
     @if (session('success'))
         <div class="alert alert-success mt-3">
@@ -26,94 +31,23 @@
                     <td>{{ $user->username }}</td>
                     <td>{{ ucfirst($user->role) }}</td>
                     <td>
-                        {{-- <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal" 
-                            data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-username="{{ $user->username }}" data-role="{{ $user->role }}">
-                            Edit
-                        </button> --}}
+                        <div class="d-flex align-items-center">
+                            <a href="{{ route('user.edit', $user->user_id) }}" class="btn btn-label-warning btn-round btn-sm d-flex align-items-center justify-content-center px-3 py-2 me-2">
+                                <i class="bi bi-pencil-square me-1"></i> Edit
+                            </a>
 
-                        <form action="{{ route('user.destroy', $user->user_id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
-                        </form>
+                            <form action="{{ route('user.destroy', $user->user_id) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-label-danger btn-round btn-sm d-flex align-items-center justify-content-center px-3 py-2" onclick="return confirm('Are you sure you want to delete this user?')">
+                                    <i class="bi bi-trash me-1"></i> Delete
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
-  <!-- Modal Edit -->
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <form id="editUserForm" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-body">
-                    <!-- Input for Name -->
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" required>
-                    </div>
-
-                    <!-- Input for Username -->
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" required>
-                    </div>
-
-                    <!-- Select Role -->
-                    <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <select class="form-select" name="role" id="role" required>
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
-                        </select>
-                    </div>
-
-                    <!-- Input for Password (optional) -->
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password (optional)</label>
-                        <input type="password" class="form-control" name="password" id="password">
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Update User</button>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
-
-</div>
-
-@endsection
-
-@section('scripts')
-    <script>
-      // Mengisi data pengguna ke dalam modal ketika tombol Edit diklik
-$('#editModal').on('show.bs.modal', function(event) {
-    var button = $(event.relatedTarget); // Tombol yang diklik
-    var userId = button.data('id');
-    var name = button.data('name');
-    var username = button.data('username');
-    var role = button.data('role');
-
-    var modal = $(this);
-    modal.find('#name').val(name);
-    modal.find('#username').val(username);
-    modal.find('#role').val(role);
-
-    var actionUrl = '/users/' + userId;
-    modal.find('#editUserForm').attr('action', actionUrl);
-});
-
-    </script>
 @endsection

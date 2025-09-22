@@ -26,7 +26,7 @@
             </div>
             <div class="mb-3">
                 <button class="btn btn-primary">Change</button>
-                <a class="btn btn-danger" href="{{ route('home') }}">Back</a>
+                <a class="btn btn-danger" href="">Back</a>
             </div>
         </form>
     </div>

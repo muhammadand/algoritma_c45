@@ -29,6 +29,8 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+   'allowed_origins' => ['http://127.0.0.1:8000'],
+    'supports_credentials' => true,
+
 
 ];

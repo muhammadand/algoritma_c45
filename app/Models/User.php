@@ -9,7 +9,16 @@ class User extends Authenticatable
 {
     use HasFactory;
 
-    protected $table = 'tb_user'; // Pastikan nama tabel sesuai dengan migrasi
-    protected $primaryKey = 'user_id'; // Sesuaikan primary key
-    protected $fillable = ['name', 'username', 'password', 'role'];
+    protected $table = 'tb_user';
+    protected $primaryKey = 'user_id';
+
+    protected $fillable = [
+        'name',
+        'username',
+        'password',
+        'role',
+        'alamat',
+        'tanggal_lahir',
+        'foto', // <-- ini penting agar update berhasil
+    ];
 }
